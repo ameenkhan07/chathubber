@@ -1,7 +1,5 @@
 package chathubber;
 import java.net.*;
-import java.util.*;
-import java.io.*;
 
 public class ClsServerChat extends Thread {
 	int i=0;

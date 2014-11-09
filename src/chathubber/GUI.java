@@ -2,8 +2,6 @@ package chathubber;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
-import java.net.*;
-import java.io.*;
 
 import java.text.SimpleDateFormat;
 
