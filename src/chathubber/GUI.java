@@ -7,9 +7,9 @@ import java.text.SimpleDateFormat;
 
 public class GUI {
 	JEditorPane editor;
-	JFrame fr;
+	JFrame Frame;
 	JScrollPane scrollPane;
-	JTextField tf;
+	JTextField TextField;
 
 	SimpleDateFormat sdf;
 
@@ -20,57 +20,69 @@ public class GUI {
 	public GUI(final String username)
 	{
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		}
 		catch (Exception e) {
 		}
 
 		sdf = new SimpleDateFormat("HH:mm:ss");
 
-		fr = new JFrame(username);
-		fr.setLayout(null);
-		fr.setResizable(false);
-		fr.setSize(300,400);
+		Frame = new JFrame(username);
+		Frame.setLayout(null);
+		Frame.setResizable(false);
+		Frame.setSize(300,400);
 
 		editor = new JEditorPane("text/html", text);
 		editor.setEditable(false);
-		fr.add(editor);
+		Frame.add(editor);
 
 		scrollPane = new JScrollPane(editor);
 		scrollPane.setBounds(0,0,300,335);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		fr.add(scrollPane);
+		Frame.add(scrollPane);
 
-		tf = new JTextField();
-		tf.setBounds(0,340,300,30);
-		fr.add(tf);
+		TextField = new JTextField();
+		TextField.setBounds(0,340,300,30);
+		Frame.add(TextField);
 
-		// fr.setAlwaysOnTop(true);
-		// fr.setLocationRelativeTo(null);
-		fr.setVisible(true);
-        tf.requestFocusInWindow();
+		// Frame.setAlwaysOnTop(true);
+		// Frame.setLocationRelativeTo(null);
+		Frame.setVisible(true);
+        TextField.requestFocusInWindow();
 
-		tf.addKeyListener(new KeyAdapter()
+		TextField.addKeyListener(new KeyAdapter()
 		{
 			public void keyPressed(KeyEvent e)
 			{
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
 				{
-					input = tf.getText();
+					input = TextField.getText();
 					if(!input.equals(""))
 					{
 						String time = sdf.format(new Date());
-						ClsClientChat.printmsg("<i>" + time + "</i> <b>" + username + ": </b>" + input);
+						
+						//DISPLAY THE MESSAGE TO THE GUI
+						try
+						{
+							//Send message recieved by GUI to server
+							Client.out.writeUTF(("<i>" + time + "</i> <b>" + username + ": </b>" + input));
+						}
+						catch (Exception ex)
+						{
+
+						}
+//						Client.printmsg("<i>" + time + "</i> <b>" + username + ": </b>" + input);
+						
 						input = "<i>" + time + "</i> <b>You: </b>" + input;
 						text = text + "<br>" + input;
 						editor.setText(text);
-						tf.setText("");
+						TextField.setText("");
 					}
 				}
             }
         });
 
-		fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public void printanswer(String recieved)

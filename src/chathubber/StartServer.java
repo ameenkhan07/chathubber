@@ -2,17 +2,17 @@ package chathubber;
 import java.net.*;
 import java.io.*;
 
-public class RunServer
+public class StartServer
 {
 	public static void main(String args[])
 	{
 		try (Socket s = new Socket("127.0.0.1", 1500))
 		{
-			//Server exists. Do nothing.
+			//Server already exists. No operation is to be performed.
 		}
-		catch (IOException ex)
+		catch (IOException e)
 		{
-			ClsServerChat server = new ClsServerChat();
+			Server server = new Server();
 			server.start();
 		}
 	}
